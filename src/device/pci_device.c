@@ -1084,6 +1084,7 @@ void pci_scan_bus(struct bus *bus, unsigned min_devfn,
 	unsigned int devfn;
 	struct device *old_devices;
 
+	printk(BIOS_DEBUG, "ilios: pci_scan_bus\n");
 	printk(BIOS_DEBUG, "PCI: pci_scan_bus for bus %02x\n", bus->secondary);
 
 	/* Maximum sane devfn is 0xFF. */

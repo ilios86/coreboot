@@ -30,6 +30,10 @@ static uint16_t pci_mmconf_read_config16(struct bus *pbus, int bus, int devfn,
 static uint32_t pci_mmconf_read_config32(struct bus *pbus, int bus, int devfn,
 					 int where)
 {
+	printk(BIOS_DEBUG,"ilios: pbus=[%p], bus=[%x], devfn=[%x], where=[%x]\n",
+			pbus, bus, devfn, where );
+	printk(BIOS_DEBUG,"ilios: PCI_MMIO_ADDR=[%p]\n", 
+			PCI_MMIO_ADDR(bus,devfn,where,3));
 	return read32(PCI_MMIO_ADDR(bus, devfn, where, 3));
 }
 
