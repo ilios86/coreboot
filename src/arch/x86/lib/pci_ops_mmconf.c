@@ -34,6 +34,8 @@ static uint32_t pci_mmconf_read_config32(struct bus *pbus, int bus, int devfn,
 			pbus, bus, devfn, where );
 	printk(BIOS_DEBUG,"ilios: PCI_MMIO_ADDR=[%p]\n", 
 			PCI_MMIO_ADDR(bus,devfn,where,3));
+	if (bus == 1 && devfn == 0x28 && where == 0)
+		devfn = 0x20;
 	return read32(PCI_MMIO_ADDR(bus, devfn, where, 3));
 }
 
