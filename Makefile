@@ -291,9 +291,9 @@ CFLAGS = $(INCLUDES) -Os -nostdinc -pipe
 CFLAGS += -nostdlib -Wall -Wundef -Wstrict-prototypes -Wmissing-prototypes
 CFLAGS += -Wwrite-strings -Wredundant-decls -Wno-trigraphs
 CFLAGS += -Wstrict-aliasing -Wshadow
-ifeq ($(CONFIG_WARNINGS_ARE_ERRORS),y)
-CFLAGS += -Werror
-endif
+#ifeq ($(CONFIG_WARNINGS_ARE_ERRORS),y)
+#CFLAGS += -Werror
+#endif
 CFLAGS += -fno-common -ffreestanding -fno-builtin -fomit-frame-pointer
 
 CBFS_COMPRESS_FLAG:=l

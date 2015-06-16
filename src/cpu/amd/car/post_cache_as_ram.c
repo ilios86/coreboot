@@ -80,11 +80,13 @@ static void post_cache_as_ram(void)
 
 	__asm__ volatile (
 		/* set new esp */ /* before CONFIG_RAMBASE */
+		"pushl %%ebp\n\t"
 		"subl   %0, %%esp\n\t"
+		"popl %%ebp\n\t"
 		::"a"( (CONFIG_DCACHE_RAM_BASE + CONFIG_DCACHE_RAM_SIZE)- (CONFIG_RAMTOP) )
 		/* discard all registers (eax is used for %0), so gcc redo everything
 		   after the stack is moved */
-		: "cc", "memory", "%ebx", "%ecx", "%edx", "%esi", "%edi", "%ebp"
+		: "cc", "memory", "%ebx", "%ecx", "%edx", "%esi", "%edi" 
 	);
 
 	/* We can put data to stack again */
