@@ -1101,19 +1101,23 @@ void pci_scan_bus(struct bus *bus, unsigned min_devfn,
 
 	post_code(0x24);
 
+	printk(BIOS_DEBUG, "ilios: pci_scan_bus\n");
 	/*
 	 * Probe all devices/functions on this bus with some optimization for
 	 * non-existence and single function devices.
 	 */
 	for (devfn = min_devfn; devfn <= max_devfn; devfn++) {
 		struct device *dev;
+		printk(BIOS_DEBUG, "ilios: pci_scan_bus before scan_get_dev\n");
 
 		/* First thing setup the device structure. */
 		dev = pci_scan_get_dev(&old_devices, devfn);
 
+		printk(BIOS_DEBUG, "ilios: pci_scan_bus before pci_probe_dev\n");
 		/* See if a device is present and setup the device structure. */
 		dev = pci_probe_dev(dev, bus, devfn);
 
+		printk(BIOS_DEBUG, "ilios: pci_scan_bus after pci_probe_dev\n");
 		/*
 		 * If this is not a multi function device, or the device is
 		 * not present don't waste time probing another function.
@@ -1145,8 +1149,9 @@ void pci_scan_bus(struct bus *bus, unsigned min_devfn,
 	 * scan the bus behind that child.
 	 */
 
+	printk(BIOS_DEBUG, "ilios: pci_scan_bus before scan_bridges\n");
 	scan_bridges(bus);
-
+	printk(BIOS_DEBUG, "ilios: pci_scan_bus after scan_bridges\n");
 	/*
 	 * We've scanned the bus and so we know all about what's on the other
 	 * side of any bridges that may be on this bus plus any devices.
