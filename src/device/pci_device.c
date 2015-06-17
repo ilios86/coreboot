@@ -973,6 +973,7 @@ device_t pci_probe_dev(device_t dev, struct bus *bus, unsigned devfn)
 		 * Have we found something? Some broken boards return 0 if a
 		 * slot is empty, but the expected answer is 0xffffffff.
 		 */
+		printk(BIOS_DEBUG, "ilios: pci_probe_dev !dev after pci_read_config32 id=%#08x\n",id);
 		if (id == 0xffffffff)
 			return NULL;
 
@@ -982,7 +983,9 @@ device_t pci_probe_dev(device_t dev, struct bus *bus, unsigned devfn)
 			       dev_path(&dummy), id);
 			return NULL;
 		}
+		printk(BIOS_DEBUG, "ilios: pci_probe_dev !dev before alloc_dev \n");
 		dev = alloc_dev(bus, &dummy.path);
+		printk(BIOS_DEBUG, "ilios: pci_probe_dev !dev after alloc_dev \n");
 	} else {
 		/*
 		 * Enable/disable the device. Once we have found the device-
@@ -999,8 +1002,10 @@ device_t pci_probe_dev(device_t dev, struct bus *bus, unsigned devfn)
 		if (dev->chip_ops && dev->chip_ops->enable_dev)
 			dev->chip_ops->enable_dev(dev);
 
+		printk(BIOS_DEBUG, "ilios: pci_probe_dev before pci_read_config32 PCI_VENDOR_ID=%#04x\n", PCI_VENDOR_ID);
 		/* Now read the vendor and device ID. */
 		id = pci_read_config32(dev, PCI_VENDOR_ID);
+		printk(BIOS_DEBUG, "ilios: pci_probe_dev after pci_read_config32 id=%#08x\n", id);
 
 		/*
 		 * If the device does not have a PCI ID disable it. Possibly
@@ -1113,7 +1118,7 @@ void pci_scan_bus(struct bus *bus, unsigned min_devfn,
 		/* First thing setup the device structure. */
 		dev = pci_scan_get_dev(&old_devices, devfn);
 
-		printk(BIOS_DEBUG, "ilios: pci_scan_bus before pci_probe_dev\n");
+		printk(BIOS_DEBUG, "ilios: pci_scan_bus before pci_probe_dev min_devfn=0x%x,max_devfn=0x%x,devfn=0x%x\n",min_devfn,max_devfn,devfn);
 		/* See if a device is present and setup the device structure. */
 		dev = pci_probe_dev(dev, bus, devfn);
 
