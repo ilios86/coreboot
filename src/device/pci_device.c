@@ -968,6 +968,7 @@ device_t pci_probe_dev(device_t dev, struct bus *bus, unsigned devfn)
 		dummy.path.type = DEVICE_PATH_PCI;
 		dummy.path.pci.devfn = devfn;
 
+		printk(BIOS_DEBUG, "ilios: pci_probe_dev !dev before pci_read_config32 \n");
 		id = pci_read_config32(&dummy, PCI_VENDOR_ID);
 		/*
 		 * Have we found something? Some broken boards return 0 if a
@@ -999,8 +1000,10 @@ device_t pci_probe_dev(device_t dev, struct bus *bus, unsigned devfn)
 		 * it may be absent and enable_dev() must cope.
 		 */
 		/* Run the magic enable sequence for the device. */
-		if (dev->chip_ops && dev->chip_ops->enable_dev)
+		if (dev->chip_ops && dev->chip_ops->enable_dev) {
+			printk(BIOS_DEBUG, "ilios: pci_probe_dev before enable_dev\n");
 			dev->chip_ops->enable_dev(dev);
+		}
 
 		printk(BIOS_DEBUG, "ilios: pci_probe_dev before pci_read_config32 PCI_VENDOR_ID=%#04x\n", PCI_VENDOR_ID);
 		/* Now read the vendor and device ID. */
