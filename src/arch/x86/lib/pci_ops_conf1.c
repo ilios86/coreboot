@@ -34,6 +34,8 @@ static uint16_t pci_conf1_read_config16(struct bus *pbus, int bus, int devfn,
 static uint32_t pci_conf1_read_config32(struct bus *pbus, int bus, int devfn,
 					int where)
 {
+	printk(BIOS_DEBUG, "ilios, in pci_conf1_read_config32, outl(%#08x, 0xCF8)\n",
+			CONFIG_CMD(bus,devfn,where));
 	outl(CONFIG_CMD(bus, devfn, where), 0xCF8);
 	return inl(0xCFC);
 }
