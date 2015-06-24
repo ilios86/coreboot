@@ -69,6 +69,7 @@ static inline __attribute__ ((always_inline))
 void pcie_write_config32(pci_devfn_t dev, unsigned int where, u32 value)
 {
 	void *addr;
+	printk(BIOS_INFO, "ilios : pcie_write_config32(where=%#08x, value=%#08x\n", where, value);
 	addr = (void *)(DEFAULT_PCIEXBAR | dev | (where & ~3));
 	write32(addr, value);
 }
