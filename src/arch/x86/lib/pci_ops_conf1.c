@@ -63,6 +63,9 @@ static void pci_conf1_write_config16(struct bus *pbus, int bus, int devfn,
 static void pci_conf1_write_config32(struct bus *pbus, int bus, int devfn,
 				     int where, uint32_t value)
 {
+	printk(BIOS_DEBUG, "ilios, in pci_conf1_write_config32, outl(%#08x, 0xCF8), outl(%#08x, 0xCFC)\n",
+			CONFIG_CMD(bus,devfn,where), value);
+	
 	outl(CONFIG_CMD(bus, devfn, where), 0xCF8);
 	outl(value, 0xCFC);
 }
