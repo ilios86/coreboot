@@ -1094,6 +1094,13 @@ void pci_scan_bus(struct bus *bus, unsigned min_devfn,
 
 	printk(BIOS_DEBUG, "ilios: pci_scan_bus\n");
 	printk(BIOS_DEBUG, "PCI: pci_scan_bus for bus %02x\n", bus->secondary);
+	
+	printk(BIOS_DEBUG, "test for 0x80012800\n");
+	outl(0x80012800, 0xCF8);
+	printk(BIOS_DEBUG, "outl(0x80012800, 0xCF8) is done\n");
+	int ret = inl(0xCFC);
+	printk(BIOS_DEBUG, "result of inl(0xCFC) == %#08x\n", ret);
+	
 
 	/* Maximum sane devfn is 0xFF. */
 	if (max_devfn > 0xff) {
