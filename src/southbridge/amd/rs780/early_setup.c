@@ -490,7 +490,8 @@ static void rs780_por_misc_index_init(device_t nb_dev)
 	 *   AGPMODE30        ([4], default=0)DISABLE
 	 *   AGP30ENCHANCED   ([5], default=0)DISABLE
 	 *   HIDE_AGP_CAP     ([8], default=1)ENABLE */
-	set_nbmisc_enable_bits(nb_dev, 0x00, ~0xFFFF0000, 0x00000506);	/* set bit 10 for MSI */
+	printk(BIOS_INFO, "ilios : before call set_nbmisc_enable_bits ~0xFFFF0000, 0x00000506\n");
+	set_nbmisc_enable_bits(nb_dev, 0x00, ~0xFFFF0000, 0x00000504);	/* set bit 10 for MSI */
 
 	/* NBMISCIND:0x6A[16]= 1 SB link can get a full swing
 	 *      set_nbmisc_enable_bits(nb_dev, 0x6A, 0ffffffffh, 000010000);

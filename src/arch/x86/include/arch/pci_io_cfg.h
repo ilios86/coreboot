@@ -90,7 +90,6 @@ static inline __attribute__((always_inline))
 void pci_io_write_config32(pci_devfn_t dev, unsigned where, uint32_t value)
 {
 	unsigned addr;
-	printk(BIOS_INFO, "ilios : pci_io_write_config32(where=%#08x, value=%#08x\n", where, value);
 #if !CONFIG_PCI_IO_CFG_EXT
         addr = (dev>>4) | where;
 #else
