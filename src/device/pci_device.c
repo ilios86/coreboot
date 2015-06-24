@@ -1219,7 +1219,25 @@ static void pci_bridge_route(struct bus *link, scan_state state)
 	reg = pci_read_config32(dev, PCI_PRIMARY_BUS);
 	reg &= 0xff000000;
 	reg |= buses;
+
+	printk(BIOS_DEBUG, "before setting p2p... : test for 0x80012800\n");
+	outl(0x80012800, 0xCF8);
+	printk(BIOS_DEBUG, "before setting p2p... : outl(0x80012800, 0xCF8) is done\n");
+	int ret = inl(0xCFC);
+	printk(BIOS_DEBUG, "before setting p2p... : result of inl(0xCFC) == %#08x\n", ret);
 	pci_write_config32(dev, PCI_PRIMARY_BUS, reg);
+
+	printk(BIOS_DEBUG, "after setting p2p... : test for 0x80000818\n");
+	outl(0x80000818, 0xCF8);
+	printk(BIOS_DEBUG, "after setting p2p... : outl(0x8000818, 0xCF8) is done\n");
+	ret = inl(0xCFC);
+	printk(BIOS_DEBUG, "after setting p2p... : result of inl(0xCFC) == %#08x\n", ret);
+	
+	printk(BIOS_DEBUG, "after setting p2p... : test for 0x80012800\n");
+	outl(0x80012800, 0xCF8);
+	printk(BIOS_DEBUG, "after setting p2p... : outl(0x80012800, 0xCF8) is done\n");
+	ret = inl(0xCFC);
+	printk(BIOS_DEBUG, "after setting p2p... : result of inl(0xCFC) == %#08x\n", ret);
 
 	if (state == PCI_ROUTE_FINAL) {
 		pci_write_config16(dev, PCI_COMMAND, link->bridge_cmd);
