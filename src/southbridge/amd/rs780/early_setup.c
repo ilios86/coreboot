@@ -31,11 +31,11 @@ static u32 nb_read_index(device_t dev, u32 index_reg, u32 index)
 
 static void nb_write_index(device_t dev, u32 index_reg, u32 index, u32 data)
 {
-	printk("ilios : nb_write_index(dev=%#08x, index_reg=%#08x, index=%#08x, data=%#08x)\n", dev, index_reg, index, data);
+	printk(BIOS_INFO, "ilios : nb_write_index(index_reg=%#08x, index=%#08x, data=%#08x)\n", index_reg, index, data);
 
-	printk("ilios : before call pci_write_config32(dev=%#08x, index_reg=%#08x, index=%#08x)\n", dev, index_reg, index) ;
+	printk(BIOS_INFO, "ilios : before call pci_write_config32(index_reg=%#08x, index=%#08x)\n", index_reg, index) ;
 	pci_write_config32(dev, index_reg, index /* | 0x80 */ );
-	printk("ilios : before call pci_write_config32(dev=%#08x, index_reg+0x4=%#08x, data=%#08x)\n", dev, index_reg + 0x4, data);
+	printk(BIOS_INFO, "ilios : before call pci_write_config32(index_reg+0x4=%#08x, data=%#08x)\n", index_reg + 0x4, data);
 	pci_write_config32(dev, index_reg + 0x4, data);
 }
 
