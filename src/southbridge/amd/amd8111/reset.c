@@ -20,6 +20,7 @@ static void pci_write_config8(pci_devfn_t dev, unsigned where, unsigned char val
 
 static void pci_write_config32(pci_devfn_t dev, unsigned where, unsigned value)
 {
+	printk(BIOS_INFO, "ilios : 4 : pci_write_config32(where=%#08x, value=%#08x\n", where, value);
 	unsigned addr;
         addr = (dev>>4) | where;
         outl(0x80000000 | (addr & ~3), 0xCF8);

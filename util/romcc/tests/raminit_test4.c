@@ -157,6 +157,7 @@ static void pci_write_config16(device_t dev, unsigned where, unsigned short valu
 
 static void pci_write_config32(device_t dev, unsigned where, unsigned int value)
 {
+	printk(BIOS_INFO, "ilios : 6(raminit_test4) : pci_write_config32(where=%#08x, val=%#08x\n", where, val);
         unsigned addr;
         addr = dev | where;
         outl(0x80000000 | (addr & ~3), 0xCF8);

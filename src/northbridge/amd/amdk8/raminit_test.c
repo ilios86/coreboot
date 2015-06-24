@@ -81,6 +81,7 @@ static void pci_write_config16(device_t dev, unsigned where, uint16_t value)
 
 static void pci_write_config32(device_t dev, unsigned where, uint32_t value)
 {
+	printk(BIOS_INFO, "ilios : 3 : pci_write_config32(where=%#08x, val=%#08x\n", where, val);
 	unsigned addr;
 	addr = dev | where;
 	pci_register[addr] = value & 0xff;
