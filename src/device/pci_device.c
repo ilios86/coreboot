@@ -1187,6 +1187,8 @@ static void pci_bridge_route(struct bus *link, scan_state state)
 	struct bus *parent = dev->bus;
 	u32 reg, buses = 0;
 
+
+	printk(BIOS_DEBUG, "in pci_bridge_route, scan_state=%d\n", state);
 	if (state == PCI_ROUTE_SCAN) {
 		link->secondary = parent->subordinate + 1;
 		link->subordinate = link->secondary;
@@ -1233,6 +1235,8 @@ static void pci_bridge_route(struct bus *link, scan_state state)
 	ret = inl(0xCFC);
 	printk(BIOS_DEBUG, "after setting p2p... : result of inl(0xCFC) == %#08x\n", ret);
 	
+	pci_write_config16(dev, PCI_COMMAND, link->bridge_cmd);
+
 	printk(BIOS_DEBUG, "after setting p2p... : test for 0x80012800\n");
 	outl(0x80012800, 0xCF8);
 	printk(BIOS_DEBUG, "after setting p2p... : outl(0x80012800, 0xCF8) is done\n");
