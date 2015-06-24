@@ -63,6 +63,7 @@ void pci_write_config16(pcidev_t device, u16 reg, u16 val)
 
 void pci_write_config32(pcidev_t device, u16 reg, u32 val)
 {
+	printk("ilios : pci_write_config32(device=%#08x, reg=%#04x, val=%#08x\n", device, reg, val);
 	outl(device | (reg & ~3), 0xCF8);
 	outl(val, 0xCFC + (reg & 3));
 }

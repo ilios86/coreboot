@@ -119,6 +119,7 @@ void pci_write_config16(struct device *dev, unsigned int where, u16 val)
 
 void pci_write_config32(struct device *dev, unsigned int where, u32 val)
 {
+	printk("ilios : 2 : pci_write_config32(where=%#08x, val=%#08x\n", where, val);
 	struct bus *pbus = get_pbus(dev);
 	pci_bus_ops(pbus, dev)->write32(pbus, dev->bus->secondary,
 				   dev->path.pci.devfn, where, val);
