@@ -936,6 +936,8 @@ static void scan_bus(struct device *busdev)
 void scan_bridges(struct bus *bus)
 {
 	struct device *child;
+	
+	printk(BIOS_SPEW, "iliostracestart in scan_bridges\n");
 
 	for (child = bus->children; child; child = child->sibling) {
 		if (!child->ops || !child->ops->scan_bus)
