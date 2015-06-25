@@ -1000,6 +1000,8 @@ device_t pci_probe_dev(device_t dev, struct bus *bus, unsigned devfn)
 		 * it may be absent and enable_dev() must cope.
 		 */
 		/* Run the magic enable sequence for the device. */
+		printk(BIOS_DEBUG, "ilios: pci_probe_dev, dev->path.pci.devfn=%x(should be PCI_DEVFN(0x0,0)\n", dev->path.pci.devfn);
+		printk(BIOS_DEBUG, "ilios: pci_probe_dev, dev->bus->dev->path.pci.devfn==%x(should be PCI_DEVFN(0x18,0)\n", dev->bus->dev->path.pci.devfn);
 		if (dev->chip_ops)
 			printk(BIOS_DEBUG, "ilios: pci_probe_dev, dev->chip_ops=%p, dev->chip_ops->enable_dev=%p\n", dev->chip_ops, dev->chip_ops->enable_dev);
 		if (dev->chip_ops && dev->chip_ops->enable_dev) {
