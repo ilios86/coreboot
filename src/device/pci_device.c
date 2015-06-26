@@ -1086,6 +1086,17 @@ void pci_scan_bus(struct bus *bus, unsigned min_devfn,
 
 	printk(BIOS_DEBUG, "ilios: pci_scan_bus\n");
 	printk(BIOS_DEBUG, "PCI: pci_scan_bus for bus %02x\n", bus->secondary);
+	u32 index = 0x66;
+	u32 data = 0x80000008;
+	printk(BIOS_INFO, "checking validity of indirect register : (idx=%x, data%#08x)\n", index, data);
+	printk(BIOS_INFO, "write process 1. set index: outl(0x80000060, 0xCF8), outl(%x, 0xCFC)\n", index|0x80);
+	outl(0x80000060, 0xCF8);
+	outl(index | 0x80, 0xCFC); 
+	printk(BIOS_INFO, "write process 2. set data: outl(0x80000064, 0xCF8), outl(%#08x, 0xCFC)\n", data);
+	/*        nbmisc_write_index(nb_dev, index, data);*/
+	outl(0x80000064, 0xCF8);
+	outl(data, 0xCFC);
+	printk(BIOS_INFO, "write complete\n");
 
 	/* Maximum sane devfn is 0xFF. */
 	if (max_devfn > 0xff) {
