@@ -281,6 +281,18 @@ void rs780_enable(device_t dev)
 		/* NOT REACHED */
 	}
 
+	u32 index = 0x66;
+	u32 data = 0x80000008;	
+	printk(BIOS_INFO, "checking validity of indirect register : (idx=%x, data%#08x)\n", index, data);
+	printk(BIOS_INFO, "write process 1. set index: outl(0x80000060, 0xCF8), outl(%x, 0xCFC)\n", index|0x80);
+	printk(BIOS_INFO, "write process 2. set data: outl(0x80000064, 0xCF8), outl(%#08x, 0xCFC)\n", data);
+/*        outl(0x80000060, 0xCF8);*/
+/*        outl(index | 0x80, 0xCFC); */
+	nbmisc_write_index(nb_dev, index, data);
+/*        outl(0x80000064, 0xCF8);*/
+/*        outl(data, 0xCFC);*/
+	printk(BIOS_INFO, "write complete\n");
+
 	/* sb_dev (dev 8) is a bridge that links to southbridge. */
 	sb_dev = dev_find_slot(0, PCI_DEVFN(8, 0));
 	if (!sb_dev) {

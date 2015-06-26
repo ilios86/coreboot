@@ -111,6 +111,18 @@ static void PciePowerOffGppPorts(device_t nb_dev, device_t dev, u32 port)
 **********************************************************************/
 static void switching_gppsb_configurations(device_t nb_dev, device_t sb_dev)
 {
+	u32 index = 0x66;
+	u32 data = 0x80000008;	
+	printk(BIOS_INFO, "checking validity of indirect register : (idx=%x, data%#08x)\n", index, data);
+	printk(BIOS_INFO, "write process 1. set index: outl(0x80000060, 0xCF8), outl(%x, 0xCFC)\n", index|0x80);
+	printk(BIOS_INFO, "write process 2. set data: outl(0x80000064, 0xCF8), outl(%#08x, 0xCFC)\n", data);
+/*        outl(0x80000060, 0xCF8);*/
+/*        outl(index | 0x80, 0xCFC); */
+	nbmisc_write_index(nb_dev, index, data);
+/*        outl(0x80000064, 0xCF8);*/
+/*        outl(data, 0xCFC);*/
+	printk(BIOS_INFO, "write complete\n");
+
 	u32 reg;
 	struct southbridge_amd_rs780_config *cfg =
 	    (struct southbridge_amd_rs780_config *)nb_dev->chip_info;
