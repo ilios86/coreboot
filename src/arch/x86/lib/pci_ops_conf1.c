@@ -34,16 +34,18 @@ static uint16_t pci_conf1_read_config16(struct bus *pbus, int bus, int devfn,
 static uint32_t pci_conf1_read_config32(struct bus *pbus, int bus, int devfn,
 					int where)
 {
-	printk(BIOS_DEBUG, "ilios, in pci_conf1_read_config32, outl(%#08x, 0xCF8)\n",
+	printk(BIOS_DEBUG, "ilios, in pci_conf1_read_config32, outl(%#08x, 0xCF8)",
 			CONFIG_CMD(bus,devfn,where));
-	printk(BIOS_DEBUG, "in pci_conf1... : test for 0x80012800\n");
-	outl(0x80012800, 0xCF8);
-	printk(BIOS_DEBUG, "in pci_conf1... : outl(0x80012800, 0xCF8) is done\n");
-	int ret = inl(0xCFC);
-	printk(BIOS_DEBUG, "in pci_conf1... : result of inl(0xCFC) == %#08x\n", ret);
+/*        printk(BIOS_DEBUG, "in pci_conf1... : test for 0x80012800\n");*/
+/*        outl(0x80012800, 0xCF8);*/
+/*        printk(BIOS_DEBUG, "in pci_conf1... : outl(0x80012800, 0xCF8) is done\n");*/
+/*        int ret = inl(0xCFC);*/
+/*        printk(BIOS_DEBUG, "in pci_conf1... : result of inl(0xCFC) == %#08x\n", ret);*/
 
 	outl(CONFIG_CMD(bus, devfn, where), 0xCF8);
-	return inl(0xCFC);
+	uint32_t result = inl(0xCFC);
+	printk(BIOS_DEBUG, ", inl(0xCFC)=%#08x\n", result);
+	return result;
 }
 
 static void pci_conf1_write_config8(struct bus *pbus, int bus, int devfn,
