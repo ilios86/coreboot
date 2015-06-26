@@ -30,7 +30,8 @@ void __cyg_profile_func_enter( void *func, void *callsite)
 		return;
 
 	DISABLE_TRACE
-	printk(BIOS_INFO, "~0x%08x(0x%08x)\n", (uint32_t) func, (uint32_t) callsite);
+        printk(BIOS_INFO, "iliostrace e 0x%08x 0x%08x\n", (uint32_t) func, (uint32_t) callsite);
+	//printk(BIOS_INFO, "~0x%08x(0x%08x)\n", (uint32_t) func, (uint32_t) callsite);
 	ENABLE_TRACE
 }
 
