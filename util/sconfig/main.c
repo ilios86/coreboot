@@ -654,13 +654,7 @@ int main(int argc, char** argv) {
 		while (h->next) {
 			h = h->next;
 			char *name_underscore = translate_name(h->name, UNSLASH);
-			if (strcmp(name_underscore, "drivers_generic_generic") == 0) 
-				fprintf(autogen, "__attribute__((weak)) struct chip_operations %s_ops = {};\n", name_underscore);
-			else if (strcmp(name_underscore, "cpu_amd_socket_AM3") == 0)
-				fprintf(autogen, "__attribute__((weak)) struct chip_operations %s_ops = {};\n", name_underscore);
-			else
-				fprintf(autogen, "extern struct chip_operations %s_ops;\n", name_underscore);
-			//fprintf(autogen, "__attribute__((weak)) struct chip_operations %s_ops = {};\n", name_underscore);
+			fprintf(autogen, "__attribute__((weak)) struct chip_operations %s_ops = {};\n", name_underscore);
 			free(name_underscore);
 		}
 		fprintf(autogen, "#endif\n");
