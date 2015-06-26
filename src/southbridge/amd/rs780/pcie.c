@@ -111,6 +111,7 @@ static void PciePowerOffGppPorts(device_t nb_dev, device_t dev, u32 port)
 **********************************************************************/
 static void switching_gppsb_configurations(device_t nb_dev, device_t sb_dev)
 {
+	return;
 	u32 reg;
 	struct southbridge_amd_rs780_config *cfg =
 	    (struct southbridge_amd_rs780_config *)nb_dev->chip_info;
