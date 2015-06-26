@@ -1084,19 +1084,42 @@ void pci_scan_bus(struct bus *bus, unsigned min_devfn,
 	unsigned int devfn;
 	struct device *old_devices;
 
+	u32 index = 0x37;
+	u32 data = 0x80000000;
+	outl(0x80000060, 0xCF8);
+	outl(index , 0xCFC);
+	outl(0x80000064, 0xCF8);
+	u32 reg = inl(0xCFC);
+	printk(BIOS_DEBUG, "NBMISCIND:0x37 has %#08x\n", reg);
+	reg |= 1 << 12;
+	reg |= 1 << 15;
+	reg |= 1 << 17;
+/*        printk(BIOS_DEBUG, "new reg value = %#08x\n", reg);*/
+/*        outl(0x80000060, 0xCF8);*/
+/*        outl(index | 0x80, 0xCFC);*/
+/*        outl(0x80000064, 0xCF8);*/
+/*        outl(reg, 0xCFC);*/
+	printk(BIOS_DEBUG, "set complete\n");
+	outl(0x80000060, 0xCF8);
+	outl(index , 0xCFC);
+	outl(0x80000064, 0xCF8);
+	reg = inl(0xCFC);
+	printk(BIOS_DEBUG, "verify updated reg value= %#08x\n", reg);
+	
+
 	printk(BIOS_DEBUG, "ilios: pci_scan_bus\n");
 	printk(BIOS_DEBUG, "PCI: pci_scan_bus for bus %02x\n", bus->secondary);
-	u32 index = 0x66;
-	u32 data = 0x80000008;
-	printk(BIOS_INFO, "checking validity of indirect register : (idx=%x, data%#08x)\n", index, data);
-	printk(BIOS_INFO, "write process 1. set index: outl(0x80000060, 0xCF8), outl(%x, 0xCFC)\n", index|0x80);
-	outl(0x80000060, 0xCF8);
-	outl(index | 0x80, 0xCFC); 
-	printk(BIOS_INFO, "write process 2. set data: outl(0x80000064, 0xCF8), outl(%#08x, 0xCFC)\n", data);
+	index = 0x66;
+	data = 0x80000000;
+/*        printk(BIOS_INFO, "checking validity of indirect register : (idx=%x, data%#08x)\n", index, data);*/
+/*        printk(BIOS_INFO, "write process 1. set index: outl(0x80000060, 0xCF8), outl(%x, 0xCFC)\n", index|0x80);*/
+/*        outl(0x80000060, 0xCF8);*/
+/*        outl(index | 0x80, 0xCFC); */
+/*        printk(BIOS_INFO, "write process 2. set data: outl(0x80000064, 0xCF8), outl(%#08x, 0xCFC)\n", data);*/
+/*        outl(0x80000064, 0xCF8);*/
+/*        outl(data, 0xCFC);*/
+/*        printk(BIOS_INFO, "write complete\n");*/
 	/*        nbmisc_write_index(nb_dev, index, data);*/
-	outl(0x80000064, 0xCF8);
-	outl(data, 0xCFC);
-	printk(BIOS_INFO, "write complete\n");
 
 	/* Maximum sane devfn is 0xFF. */
 	if (max_devfn > 0xff) {
