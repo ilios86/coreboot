@@ -48,8 +48,9 @@ static void lpc_init(device_t dev)
 	/* Enable the LPC Controller */
 	sm_dev = dev_find_slot(0, PCI_DEVFN(0x14, 0));
 	dword = pci_read_config32(sm_dev, 0x64);
-	dword |= 1 << 20;
-	pci_write_config32(sm_dev, 0x64, dword);
+	printk(BIOS_DEBUG, "lpc : offset 64h = %#08x\n", dword);
+/*        dword |= 1 << 20;*/
+/*        pci_write_config32(sm_dev, 0x64, dword);*/
 
 	/* Initialize isa dma */
 #if CONFIG_SOUTHBRIDGE_AMD_SB700_SKIP_ISA_DMA_INIT
