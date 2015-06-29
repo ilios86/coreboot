@@ -48,7 +48,7 @@ static void lpc_init(device_t dev)
 	/* Enable the LPC Controller */
 	sm_dev = dev_find_slot(0, PCI_DEVFN(0x14, 0));
 	dword = pci_read_config32(sm_dev, 0x64);
-	printk(BIOS_DEBUG, "lpc : offset 64h = %#08x\n", dword);
+	printk(BIOS_DEBUG, "ilios lpc : offset 64h = %#08x\n", dword);
 /*        dword |= 1 << 20;*/
 /*        pci_write_config32(sm_dev, 0x64, dword);*/
 
@@ -56,17 +56,20 @@ static void lpc_init(device_t dev)
 #if CONFIG_SOUTHBRIDGE_AMD_SB700_SKIP_ISA_DMA_INIT
 	printk(BIOS_DEBUG, "Skipping isa_dma_init() to avoid getting stuck.\n");
 #else
+	printk(BIOS_DEBUG, "ilios : before isa_dma_init()\n");
 	isa_dma_init();
 #endif
 
 	/* Enable DMA transaction on the LPC bus */
 	byte = pci_read_config8(dev, 0x40);
 	byte |= (1 << 2);
+	printk(BIOS_DEBUG, "ilios : before enable DMA transaction on the LPC bus(),byte=%x \n", byte);
 	pci_write_config8(dev, 0x40, byte);
 
 	/* Disable the timeout mechanism on LPC */
 	byte = pci_read_config8(dev, 0x48);
 	byte &= ~(1 << 7);
+	printk(BIOS_DEBUG, "ilios : before disable the timeout mechanism on LPC(),byte=%x\n", byte);
 	pci_write_config8(dev, 0x48, byte);
 
 	/* Disable LPC MSI Capability */
@@ -78,9 +81,11 @@ static void lpc_init(device_t dev)
 	 */
 	byte &= ~(1 << 0);
 #endif
+	printk(BIOS_DEBUG, "ilios : before write to LPC MSI Capability(0x78), byte=%x\n", byte);
 	pci_write_config8(dev, 0x78, byte);
 
 	cmos_check_update_date();
+	printk(BIOS_DEBUG, "ilios : return from lpc_init()\n");
 }
 
 int acpi_get_sleep_type(void)
